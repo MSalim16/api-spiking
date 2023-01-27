@@ -1,6 +1,9 @@
 import { FatSecretClient } from "fatsecret-api";
 const fs = require("fs");
 
+const recipes = require('./recipes.js')
+
+
 const fatSecretClient = new FatSecretClient({
   clientId: "a058fa2aa20349fc8ba86b47b2c3b4fc",
   clientSecret: "afa981a7eede4776b0f4a9d3a1ecce80",
@@ -38,4 +41,10 @@ const fatSecretClient = new FatSecretClient({
 //     .catch(err => {});
 // }
 
-let readfile = fs.readFileSync();
+// let readfile = fs.readFileSync();
+for (let i = 0; i < 37; i++) {
+  fatSecretClient.getRecipe({recipe_id: recipes[i].recipe_id})
+  .then(console.log)
+  .catch(console.log)
+  
+}

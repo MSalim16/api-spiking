@@ -1,4 +1,4 @@
-export const recipes = [
+module.exports = [
   {
     recipe_description: "An easy-to-prepare dish perfect for chilly nights.",
     recipe_id: "50800647",
@@ -53551,4 +53551,4 @@ export const recipes = [
     recipe_url:
       "https://www.fatsecret.com/recipes/rosemary-root-vegetable-mash/Default.aspx",
   },
-];
+]

@@ -1,7 +1,8 @@
 {
   "dependencies": {
     "fatsecret-api": "^1.0.3",
-    "openfoodfacts-nodejs": "^0.1.0"
+    "openfoodfacts-nodejs": "^0.1.0",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/node": "^18.11.18"
