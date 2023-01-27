@@ -42,9 +42,16 @@ const fatSecretClient = new FatSecretClient({
 // }
 
 // let readfile = fs.readFileSync();
-for (let i = 0; i < 37; i++) {
+
+const fullRecipes:Array<any> = []
+
+for (let i = 0; i < 1000; i++) {
   fatSecretClient.getRecipe({recipe_id: recipes[i].recipe_id})
-  .then(console.log)
+    .then(recipe => {
+      fullRecipes.push(recipe)
+    }).then(() => {
+      if (fullRecipes.length === 1000) console.log(fullRecipes);
+    })
   .catch(console.log)
-  
 }
+
