@@ -9,14 +9,14 @@ const fatSecretClient = new FatSecretClient({
   scope: "basic",
 });
 
-// fatSecretClient
-//   .getRecipe({ recipe_id: "31341" })
-//   .then((recipe) => {
-//     console.log(recipe);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+fatSecretClient
+  .getRecipe({ recipe_id: "31341" })
+  .then((recipe) => {
+    console.log(recipe);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // fatSecretClient
 //   .getRecipeSearch({ search_expression: "", max_results: 50 })
@@ -97,11 +97,12 @@ const fatSecretClient = new FatSecretClient({
 // console.log(fullRecipes)
 
 const writeFullRecipes = async () => {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 120; i < 150; i++) {
     await fatSecretClient
       .getRecipe({ recipe_id: recipes[i].recipe_id })
       .then(async (recipe) => {
-        await fs.writeFileSync("fullRecipes.json", recipe + ",", {
+        console.log(recipe)
+        await fs.writeFileSync("fullRecipes.txt", JSON.stringify(recipe) + ",", {
           encoding: "utf8",
           flag: "a+"
         });
