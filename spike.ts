@@ -1,8 +1,7 @@
 import { FatSecretClient } from "fatsecret-api";
 const fs = require("fs");
 
-const recipes = require('./recipes.js')
-
+const recipes = require("./recipes.js");
 
 const fatSecretClient = new FatSecretClient({
   clientId: "a058fa2aa20349fc8ba86b47b2c3b4fc",
@@ -12,10 +11,10 @@ const fatSecretClient = new FatSecretClient({
 
 // fatSecretClient
 //   .getRecipe({ recipe_id: "31341" })
-//   .then(recipe => {
+//   .then((recipe) => {
 //     console.log(recipe);
 //   })
-//   .catch(err => {
+//   .catch((err) => {
 //     console.log(err);
 //   });
 
@@ -43,15 +42,72 @@ const fatSecretClient = new FatSecretClient({
 
 // let readfile = fs.readFileSync();
 
-const fullRecipes:Array<any> = []
+// const scrapeAPI = async () => {
+//   for (let i = 0; i < 3687; i++) {
+//     if (!recipes[i].ingredients)
+//       await fatSecretClient
+//         .getRecipe({ recipe_id: recipes[i].recipe_id })
+//         .then(async (recipe) => {
+//           recipes[i].ingredients = recipe.ingredients.ingredient;
+//           console.log("writing to file")
+//           console.log(i)
+//          await fs.writeFile(
+//             "recipesWithIngredients.json",
+//             recipe,
+//             "utf8",
+//             function (err: any) {
+//               if (err) {
+//                 console.log(
+//                   "An error occured while writing JSON Object to File."
+//                 );
+//                 return console.log(err);
+//               }
 
-for (let i = 0; i < 1000; i++) {
-  fatSecretClient.getRecipe({recipe_id: recipes[i].recipe_id})
-    .then(recipe => {
-      fullRecipes.push(recipe)
-    }).then(() => {
-      if (fullRecipes.length === 1000) console.log(fullRecipes);
-    })
-  .catch(console.log)
-}
+//               console.log("JSON file has been saved.");
+//             }
+//           );
+//         })
+//         .catch(console.log);
+//   }
+// };
 
+// scrapeAPI()
+
+// while (!recipes.every((recipe: any) => recipe.ingredients)) {
+//   setTimeout(scrapeAPI, 60000);
+// }
+
+// fatSecretClient
+//   .getRecipe({ recipe_id: recipes[0].recipe_id })
+//   .then((recipe) => console.log).catch(console.log);
+
+// const fullRecipes:Array<any> = []
+
+// const grabIngredientsForRecipes = async () => {
+//   for (let i = 71; i < 100; i++) {
+//     await fatSecretClient
+//       .getRecipe({ recipe_id: recipes[i].recipe_id })
+//       .then((recipe) => {
+//         fullRecipes.push(recipe)
+//       }).catch(console.log);
+//   }
+// }
+
+// grabIngredientsForRecipes()
+// console.log(fullRecipes)
+
+const writeFullRecipes = async () => {
+  for (let i = 0; i < 30; i++) {
+    await fatSecretClient
+      .getRecipe({ recipe_id: recipes[i].recipe_id })
+      .then(async (recipe) => {
+        await fs.writeFileSync("fullRecipes.json", recipe + ",", {
+          encoding: "utf8",
+          flag: "a+"
+        });
+      })
+      .catch(console.log);
+  }
+};
+
+writeFullRecipes()

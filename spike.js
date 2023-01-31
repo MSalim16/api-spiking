@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const fatsecret_api_1 = require("fatsecret-api");
 const fs = require("fs");
-const recipes = require('./recipes');
-console.log(recipes[0]);
+const recipes = require("./recipes.js");
 const fatSecretClient = new fatsecret_api_1.FatSecretClient({
     clientId: "a058fa2aa20349fc8ba86b47b2c3b4fc",
     clientSecret: "afa981a7eede4776b0f4a9d3a1ecce80",
@@ -11,10 +10,10 @@ const fatSecretClient = new fatsecret_api_1.FatSecretClient({
 });
 // fatSecretClient
 //   .getRecipe({ recipe_id: "31341" })
-//   .then(recipe => {
+//   .then((recipe) => {
 //     console.log(recipe);
 //   })
-//   .catch(err => {
+//   .catch((err) => {
 //     console.log(err);
 //   });
 // fatSecretClient
@@ -37,3 +36,63 @@ const fatSecretClient = new fatsecret_api_1.FatSecretClient({
 //     .catch(err => {});
 // }
 // let readfile = fs.readFileSync();
+// const scrapeAPI = async () => {
+//   for (let i = 0; i < 3687; i++) {
+//     if (!recipes[i].ingredients)
+//       await fatSecretClient
+//         .getRecipe({ recipe_id: recipes[i].recipe_id })
+//         .then(async (recipe) => {
+//           recipes[i].ingredients = recipe.ingredients.ingredient;
+//           console.log("writing to file")
+//           console.log(i)
+//          await fs.writeFile(
+//             "recipesWithIngredients.json",
+//             recipe,
+//             "utf8",
+//             function (err: any) {
+//               if (err) {
+//                 console.log(
+//                   "An error occured while writing JSON Object to File."
+//                 );
+//                 return console.log(err);
+//               }
+//               console.log("JSON file has been saved.");
+//             }
+//           );
+//         })
+//         .catch(console.log);
+//   }
+// };
+// scrapeAPI()
+// while (!recipes.every((recipe: any) => recipe.ingredients)) {
+//   setTimeout(scrapeAPI, 60000);
+// }
+// fatSecretClient
+//   .getRecipe({ recipe_id: recipes[0].recipe_id })
+//   .then((recipe) => console.log).catch(console.log);
+// const fullRecipes:Array<any> = []
+// const grabIngredientsForRecipes = async () => {
+//   for (let i = 71; i < 100; i++) {
+//     await fatSecretClient
+//       .getRecipe({ recipe_id: recipes[i].recipe_id })
+//       .then((recipe) => {
+//         fullRecipes.push(recipe)
+//       }).catch(console.log);
+//   }
+// }
+// grabIngredientsForRecipes()
+// console.log(fullRecipes)
+const writeFullRecipes = async () => {
+    for (let i = 0; i < 30; i++) {
+        await fatSecretClient
+            .getRecipe({ recipe_id: recipes[i].recipe_id })
+            .then(async (recipe) => {
+            await fs.writeFileSync("fullRecipes.json", recipe + ",", {
+                encoding: "utf8",
+                flag: "a+"
+            });
+        })
+            .catch(console.log);
+    }
+};
+writeFullRecipes();
